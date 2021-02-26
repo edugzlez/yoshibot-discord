@@ -1,5 +1,7 @@
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
+package com.castaland.YoshiBOT;
+
+import com.castaland.utils.JsonReader;
+import com.castaland.utils.Primes;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -8,24 +10,14 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import javax.security.auth.login.LoginException;
 import java.io.IOException;
 import java.math.BigInteger;
-import java.text.ParseException;
 import java.util.List;
-import java.util.Random;
 
-public class Bot extends ListenerAdapter {
+public class MessageListener extends ListenerAdapter {
 
-    public static JDA jda;
-    public static User self;
-    public static String eduid = "436516214487908353";
 
-    public static void main(String[] args) throws LoginException, ParseException {
-        JDABuilder builder = JDABuilder.createDefault("ODEyMDc3NzE5OTY0NjE0NjU2.YC7gUA.oun-Mowr0rNld72Snl1m4TuOc0U");
-        builder.addEventListeners(new Bot());
-        jda = builder.build();
-        self = jda.getSelfUser();
+    public MessageListener() {
     }
 
     public void onMessageReceived(@NotNull MessageReceivedEvent event) {
@@ -34,7 +26,7 @@ public class Bot extends ListenerAdapter {
         String message = event.getMessage().getContentRaw();
         TextChannel channel = event.getTextChannel();
 
-        if (event.getAuthor().getId().equals(eduid)) {
+        if (event.getAuthor().getId().equals(Bot.eduid)) {
             if (message.equalsIgnoreCase("!apagar")) {
                 channel.sendMessage("¡Me apago!").queue();
                 try {
@@ -42,7 +34,7 @@ public class Bot extends ListenerAdapter {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                jda.shutdown();
+                Bot.jda.shutdown();
             }
         }
 
@@ -60,8 +52,8 @@ public class Bot extends ListenerAdapter {
             }
         }
         else if (message.equalsIgnoreCase("!primo")) {
-            BigInteger primo = BigInteger.probablePrime(randInt(2, 32), new Random());
-            channel.sendMessage(":exclamation:  "+primo.toString()).queue();
+            BigInteger rprime = Primes.randPrime();
+            channel.sendMessage(":exclamation:  "+rprime.toString()).queue();
         }
         System.out.println(
                 event.getAuthor().getId()+":"+
@@ -69,11 +61,4 @@ public class Bot extends ListenerAdapter {
                         event.getMessage().getContentDisplay()
         );
     }
-
-    public static int randInt(int min, int max) {
-        Random rand = new Random();
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        return randomNum;
-    }
-
 }

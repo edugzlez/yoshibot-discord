@@ -14,3 +14,9 @@ This project is using Maven utility. You can install dependencies and build the 
 mvn install
 ````
 The _.jar_ file will be saved in the _target_ folder. 
+
+### How to run
+```
+java -jar YoshiCastaBOT-1.0-SNAPSHOT.jar <BOT_TOKEN_DISCORD>
+```
+Use `YoshiCastaBOT-1.0-SNAPSHOT-jar-with-dependencies.jar` if you run it in a computer with dependencies installed.

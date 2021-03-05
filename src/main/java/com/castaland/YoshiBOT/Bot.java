@@ -23,6 +23,5 @@ public class Bot {
         } else {
             System.err.println("No has metido una token como argumento.");
         }
-
     }
 }

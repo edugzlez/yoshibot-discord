@@ -1,5 +1,6 @@
 package com.castaland.YoshiBOT;
 
+import com.castaland.YoshiBOT.commands.*;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.User;
@@ -17,7 +18,16 @@ public class Bot {
         if(args.length > 0) {
             token = args[0];
             JDABuilder builder = JDABuilder.createDefault(token);
-            builder.addEventListeners(new MessageListener());
+
+            MessageListener msglistener = new MessageListener();
+
+            msglistener.registerCommand("!tiempo", new TiempoCommand());
+            msglistener.registerCommand("!dado", new DiceCommand());
+            msglistener.registerCommand("!dados", new DicesCommand());
+            msglistener.registerCommand("!hora", new HourCommand());
+            msglistener.registerCommand("!primo", new PrimeCommand());
+
+            builder.addEventListeners(msglistener);
             jda = builder.build();
             self = jda.getSelfUser();
         } else {

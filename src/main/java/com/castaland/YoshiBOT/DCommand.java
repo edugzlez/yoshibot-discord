@@ -9,7 +9,7 @@ public interface DCommand {
 
     void execute(MessageReceivedEvent event, List<String> args);
 
-    public static List<String> getParams(String message) {
+    static List<String> getParams(String message) {
         return Arrays.asList(message.split(" "));
     }
 }
